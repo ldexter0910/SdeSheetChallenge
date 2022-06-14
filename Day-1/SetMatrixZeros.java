@@ -5,26 +5,30 @@
 public class SetMatrixZeros {
     public static void setZeros(int matrix[][]) {
         // Write your code here..
-        // better way, but not the best
+        // best technique
         int rows = matrix.length;
         int cols = matrix[0].length;
         
-        boolean[] rowsSet = new boolean[rows];
-        boolean[] colsSet = new boolean[cols];
+        boolean firstColSet = false;
         for(int i=0;i<rows;i++) {
-            for(int j=0;j<cols;j++) {
+            if(matrix[i][0] == 0)
+                firstColSet = true;
+
+            for(int j=1;j<cols;j++) {
                 if(matrix[i][j] == 0) {
-                    rowsSet[i] = true;
-                    colsSet[j] = true;
+                    matrix[i][0] = matrix[0][j] = 0;
                 }
             }
         }
         
-        for(int i=0;i<rows;i++) {
-            for(int j=0;j<cols;j++) {
-                if(rowsSet[i] || colsSet[j])
+        for(int i=rows-1;i>=0;i--) {
+            for(int j=cols-1;j>=1;j--) {
+                if(matrix[i][0] == 0 || matrix[0][j] == 0)
                     matrix[i][j] = 0;
             }
+
+            if(firstColSet)
+                matrix[i][0] = 0;
         }
     }
 }
